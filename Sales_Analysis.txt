@@ -1,0 +1,125 @@
+##Sales data file 
+ -  took the file from Lean excel solutions.
+
+Added new products Product 46 - 50 in the master data sheet and created the sale type entries for these newly added products.
+
+##Preparing, combining both the tables as a new database
+
+created a new tab called 'Final_data'. Copied the whole input data file. Then only the column names from the master data.Named the table as Finaldata.
+
+##Populating Finaldata table.
+
+Filled the Product column using the function 
+- =VLOOKUP([@[PRODUCT ID]],MasterData,2)
+
+Filled the category column using the function 
+- =VLOOKUP([@[PRODUCT ID]],MasterData,3)
+
+Filled the UOM column using the function 
+- =VLOOKUP([@[PRODUCT ID]],MasterData,4)
+
+Filled the Buying price column using the function 
+- =VLOOKUP([@[PRODUCT ID]],MasterData,5)
+
+Filled the Selling price column using the function 
+- =VLOOKUP([@[PRODUCT ID]],MasterData,6)
+
+
+##created new calculated field columns - total buy value and total sell value columns
+
+Total buy value  =[@[BUYING PRICE]]*[@QUANTITY]
+
+Total sell value  =[@[SELLING PRICE]]*[@QUANTITY]*(1-[@[DISCOUNT %]]) Then Change number format to number.
+
+##created new columns Day,month and year
+
+Day =DAY([@DATE])
+Month =TEXT([@DATE],"MMM")
+year =YEAR([@DATE])
+
+##Formatting
+
+Formatted all the price columns to currency $.
+
+
+##Analysis
+
+
+Created a new tab called Pivot_Final_data for analysis.
+
+Created the following pivot tables - By Day, By month, By product, By category, By Sale type, By payment type and by Total Sale value.
+
+##Added slicers 
+
+Added slicers for Month, year, payment type, sale type and linked to all the pivot tables by slicer -> report connections.
+
+##Added charts
+ Created an area chart for the daily sales.
+
+#Finding Total sales, profit and profit percentage.
+
+total profit = total sell value - total buy value
+
+Profit % = total profit/total buy value
+
+##Adding checkboxes 
+
+Added 3 checkboxes so that we can view the sales per month, profit per month and profit % per month depending whether its checked or not. Created a stacked column chart. Based on the selection in the checkboxes, the graph is displayed.
+
+##Make the by product pivot table dynamic 
+
+Made the product table as dynamic as selecting the month year using slicers can be made possible only if the table is dynamic else it will give error.
+
+To make it dynamic, I used the Offset function 
+
+=OFFSET($R$3,1,0,COUNT($S:$S)) and filled the product, Total sell value and quantity column. 
+
+Now, selecting the month gives you the modified dynamic tbale 'by product'.
+
+##Added Rank 
+
+Added rank for the product based on the total sell value to find the top-most product of the year by using RANK function.
+
+##Added Vlookup function 
+
+Added Vlookup function to get the first ranked product for display in the dashboard.
+
+=VLOOKUP(1,W:Z,2,FALSE)
+
+##Added a table to show the first 10 products
+
+Used the offset function and changed the height in the offset function to 10 to display first 10 products.
+=OFFSET($R$3,1,0,10)
+
+Created a bar chart for the same.
+
+##created scroll bar
+
+created a scroll bar to display the 10 products each time you scroll up/down. Also changed the rows in the offset function to the output of the scrolling bar for the product display accordingly.
+
+##Finding the top selling product
+
+Created the same category wise table using offset function
+=OFFSET($AH$3,1,0,COUNT($AI:$AI))
+
+created Rank function =RANK(AM4,$AM$4#) to get the order of the most selling product.
+
+From this newly created table, insert a tree map chart.
+
+##created sale type pivot and chart
+
+created a sale type pivot table and inserted a pie chart for the same.
+
+##created payment type pivot and chart
+
+created a payment type pivot table and inserted a pie chart for the same.
+
+##Created dynamic dashboard
+
+I created a dynamic dashboard in a new tab. Arranged everything accordingly and voila..
+
+It's ready to view...so COOL
+
+
+
+
